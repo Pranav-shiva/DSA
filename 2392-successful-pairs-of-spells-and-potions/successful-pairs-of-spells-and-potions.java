@@ -1,28 +1,32 @@
+import java.util.*;
+
 class Solution {
     public int[] successfulPairs(int[] spells, int[] potions, long success) {
         Arrays.sort(potions);
         int n = spells.length;
-        int ans[] = new int[n];
-
+        int m = potions.length;
+        int[] result = new int[n];
+        
         for (int i = 0; i < n; i++) {
-            int idx = bs(potions, spells[i], success);
-            if (idx != -1) ans[i] = potions.length - idx;
+            long spell = spells[i];
+            long minPotion = (success + spell - 1) / spell; // ceil(success / spell)
+            
+            int idx = lowerBound(potions, minPotion);
+            result[i] = m - idx; // number of successful potions
         }
-
-        return ans;
+        
+        return result;
     }
 
-    int bs(int potions[], long strength, long success) {
-        int low = 0, high = potions.length - 1, idx = -1;
-        while (low <= high) {
-            int mid = low + (high - low) / 2;
-            if ((long) potions[mid] * strength >= success) {
-                idx = mid;
-                high = mid - 1; // find smaller index
-            } else {
-                low = mid + 1;
-            }
+    private int lowerBound(int[] arr, long target) {
+        int left = 0, right = arr.length;
+        while (left < right) {
+            int mid = left + (right - left) / 2;
+            if (arr[mid] < target)
+                left = mid + 1;
+            else
+                right = mid;
         }
-        return idx;
+        return left;
     }
 }
