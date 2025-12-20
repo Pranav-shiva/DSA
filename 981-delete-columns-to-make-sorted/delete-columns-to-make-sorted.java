@@ -8,6 +8,7 @@ class Solution {
                 if(a>b)
                 {
                     scount++;
+                    break;
                 }
 
             }
