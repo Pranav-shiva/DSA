@@ -1,13 +1,18 @@
 class Solution {
-    public int minimumBoxes(int[] apple, int[] capacity) {
-        Arrays.sort(capacity);
-        int ans = 0, sum = 0;
-        for(int i = 0; i < apple.length; i++) sum += apple[i];
-        for(int i = capacity.length - 1; i >= 0; i--) {
-            sum -= capacity[i];
-            ans++;
-            if(sum <= 0) return ans;
+    public int minimumBoxes(int[] a, int[] c) {
+        Arrays.sort(c);
+        int sum=0,count=0;
+        for(int i=0;i<a.length;i++){
+            sum=sum+a[i];
         }
-        return ans;
+        for(int i=c.length-1;i>=0;i--){
+            if(sum<=0){
+                return count;
+            }
+            sum=sum-c[i];
+            count++;
+        }
+        return count;
+        
     }
 }
