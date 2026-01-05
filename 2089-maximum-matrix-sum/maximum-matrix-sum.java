@@ -10,7 +10,6 @@ class Solution {
                 
         
             }}
-        System.out.print(c);
         if(c%2==0)
         return sum;
         else
