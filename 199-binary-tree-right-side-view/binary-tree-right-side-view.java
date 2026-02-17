@@ -14,36 +14,27 @@
  * }
  */
 class Solution {
-    class Pair{
-        TreeNode node;
-        int val;
-        public Pair(TreeNode node,int val){
-            this.node=node;
-            this.val=val;
-        }
-    }
     public List<Integer> rightSideView(TreeNode root) {
-        ArrayList<Integer> ans=new ArrayList<>();
-        Queue<Pair> q=new LinkedList<>();
-        Map<Integer,Integer> hm=new TreeMap<>();
-        if(root==null)
-        return ans;
-        q.add(new Pair(root,0));
-        while(!q.isEmpty()){
-            Pair p=q.remove();
-            TreeNode node=p.node;
-            int val=p.val;
-            hm.put(val,node.val);
-            if(node.left!=null)
-            q.add(new Pair(node.left,val+1));
-            if(node.right!=null)
-            q.add(new Pair(node.right,val+1));
+        List<Integer> ans = new ArrayList<>();
+        if (root == null) return ans;
 
+        Queue<TreeNode> q = new LinkedList<>();
+        q.add(root);
 
+        while (!q.isEmpty()) {
+            int size = q.size();  
+            
+            for (int i = 0; i < size; i++) {
+                TreeNode node = q.poll();
+                                if (i == size - 1) {
+                    ans.add(node.val);
+                }
+
+                if (node.left != null) q.add(node.left);
+                if (node.right != null) q.add(node.right);
+            }
         }
-        ans.addAll(hm.values());
+
         return ans;
-        
-        
     }
 }
