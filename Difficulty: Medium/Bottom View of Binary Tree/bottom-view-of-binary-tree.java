@@ -1,45 +1,43 @@
+/*
+class Node {
+    int data;
+    Node left;
+    Node right;
 
+    Node(int data) {
+        this.data = data;
+        left = null;
+        right = null;
+    }
+}
+*/
 
-//User function Template for Java
-
-
-class Solution
-{
-    static class Info{
+class Solution {
+    class pair{
         Node node;
-        int hd;
-        Info(Node node, int hd ){
-            this.hd=hd;
+        int val;
+        public pair(Node node ,int val ){
             this.node=node;
+            this.val=val;
         }
     }
-    //Function to return a list containing the bottom view of the given tree.
-    public ArrayList <Integer> bottomView(Node root)
-    { 
-        HashMap<Integer,Node> hm=new HashMap<>();
-        ArrayList<Integer> arr=new ArrayList<>();
-        Queue<Info> q=new LinkedList<>();
-        int max=0,min=0;
-        q.add(new Info(root,0));
+    public ArrayList<Integer> bottomView(Node root) {
+        ArrayList<Integer> ans=new ArrayList<>();
+        Queue<pair> q=new LinkedList<>();
+        Map<Integer,Integer> hm=new TreeMap<>();
+        q.add(new pair(root,0));
         while(!q.isEmpty()){
-            Info curr=q.remove();
-                hm.put(curr.hd,curr.node);
-            
-            if(curr.node.left!=null){
-                q.add(new Info(curr.node.left,curr.hd-1));
-                min=Math.min(min,curr.hd-1);
-            }
-            if(curr.node.right!=null){
-                q.add(new Info(curr.node.right,curr.hd+1));
-                max=Math.max(max,curr.hd+1);
-            }
+            pair p=q.remove();
+            Node node=p.node;
+            int val=p.val;
+            hm.put(val,node.data);
+            if(node.left!=null)
+            q.add(new pair(node.left,val-1));
+            if(node.right!=null)
+            q.add(new pair(node.right,val+1));
         }
-       for(int i= min;i<=max;i++){
-            arr.add(hm.get(i).data);
-          
-        }
-        return arr;
-        
-        // Code here
+        ans.addAll(hm.values());
+        return ans;
+
     }
 }
