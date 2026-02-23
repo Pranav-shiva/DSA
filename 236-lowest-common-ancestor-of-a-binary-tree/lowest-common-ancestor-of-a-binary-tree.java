@@ -8,18 +8,33 @@
  * }
  */
 class Solution {
+    public boolean path(TreeNode root, TreeNode p , ArrayList<TreeNode> arr){
+        if(root==null)
+        return false;
+                arr.add(root);
+        if(root==p)
+        return true;
+       if( path(root.left,p,arr)|| path(root.right,p,arr))
+       return true;
+               arr.remove(arr.size()-1);
+               return false;
+    }
     public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
-        if (root == null || root == p || root == q) {
-            return root;
-        }
+        ArrayList<TreeNode> arr1=new ArrayList<>();
+                ArrayList<TreeNode> arr2=new ArrayList<>();
+                path(root,p,arr1);
+                path(root,q,arr2);
+                HashSet<TreeNode> hs=new HashSet<>();
+                TreeNode ans=root;
+                for(int i=0;i<arr1.size();i++){
+                    hs.add(arr1.get(i));
+                }
+                for(int i=0;i<arr2.size();i++){
+                    if(hs.contains(arr2.get(i)))
+                    ans=arr2.get(i);
+                }
+                              return ans;
 
-        // Search in left and right subtrees
-        TreeNode left = lowestCommonAncestor(root.left, p, q);
-        TreeNode right = lowestCommonAncestor(root.right, p, q);
 
-        // Result
-        if (left == null) return right;
-        if (right == null) return left;
-        return root;
     }
 }
