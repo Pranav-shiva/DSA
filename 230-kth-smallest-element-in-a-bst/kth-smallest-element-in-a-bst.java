@@ -14,23 +14,22 @@
  * }
  */
 class Solution {
-    int count = 0;
-    TreeNode result = null;
-
+    int c=0;
+    int ans=-1;
     public int kthSmallest(TreeNode root, int k) {
-        helper(root, k);
-        return result.val;
-    }
-
-    private void helper(TreeNode node, int k) {
-        if (node == null) return;
-
-        helper(node.left, k);       // Traverse left
-        count++;                    // Visit current
-        if (count == k) {
-            result = node;
-            return;
+        if(root.left!=null)
+        kthSmallest(root.left,k);
+        c++;
+        if(c==k){
+            ans=root.val;
+            return ans;
         }
-        helper(node.right, k);      // Traverse right
+        if(root.right!=null){
+            
+        kthSmallest(root.right,k);
+        }
+        return ans;
+
+        
     }
 }
